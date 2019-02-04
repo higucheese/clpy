@@ -102,12 +102,14 @@ logging.info("%d device(s) found" % __num_devices)
 logging.info("Get all devices...", end='')
 cdef cl_device_id* __devices = \
     <cl_device_id*>malloc(sizeof(cl_device_id)*__num_devices)
+
+
 api.GetDeviceIDs(
     primary_platform,
     CL_DEVICE_TYPE_ALL,
     __num_devices,
     &__devices[0])
-num_devices = __num_devices     # provide as pure python interface
+# num_devices = __num_devices     # provide as pure python interface
 logging.info("SUCCESS")
 
 for id in range(__num_devices):
@@ -131,6 +133,9 @@ for id in range(__num_devices):
     __command_queues[id] = \
         api.CreateCommandQueue(__context, __devices[id], 0)
 logging.info("SUCCESS")
+
+# thiguchi 何故かはわからないが、デバイス数が2以上だとCLBlastの呼び出しの際にバグってしまう
+num_devices = 1
 
 ##########################################
 # Functions
