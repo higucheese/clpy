@@ -176,8 +176,10 @@ def make_extensions(options, compiler, use_cython):
 
     settings['include_dirs'] = [
         x for x in include_dirs if path.exists(x)]
+    settings['include_dirs'].append('/home/thiguchi/opt/CLBlast/include')
     settings['library_dirs'] = [
         x for x in settings['library_dirs'] if path.exists(x)]
+    settings['library_dirs'].append('/home/thiguchi/opt/CLBlast/lib')
     if sys.platform != 'win32':
         settings['runtime_library_dirs'] = settings['library_dirs']
     if sys.platform == 'darwin':
